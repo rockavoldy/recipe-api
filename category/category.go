@@ -17,7 +17,7 @@ type Category struct {
 }
 
 func NewCategory(name string) (Category, error) {
-	if err := validateName(name); err != nil {
+	if err := common.ValidateName(name); err != nil {
 		return Category{}, err
 	}
 

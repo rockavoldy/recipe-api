@@ -2,10 +2,17 @@ package common
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
+	"strings"
 	"time"
 
 	"gopkg.in/guregu/null.v4"
+)
+
+var (
+	ErrNameMustAlphanumeric = errors.New("name must be alphanumeric")
+	ErrNameTooShort         = errors.New("name must be above 3 character")
 )
 
 type Response struct {
@@ -40,4 +47,15 @@ func ParseNullStringToTime(s null.String) (t null.Time) {
 	}
 
 	return null.TimeFrom(ts)
+}
+
+func ValidateName(name string) error {
+	if len(name) < 3 {
+		return ErrNameTooShort
+	}
+	if ok := strings.ContainsAny(name, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ,.-_()[]{};:'\""); !ok {
+		return ErrNameMustAlphanumeric
+	}
+
+	return nil
 }

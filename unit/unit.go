@@ -17,7 +17,7 @@ type Unit struct {
 }
 
 func NewUnit(name string) (Unit, error) {
-	if err := validateName(name); err != nil {
+	if err := common.ValidateName(name); err != nil {
 		return Unit{}, err
 	}
 
