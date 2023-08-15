@@ -6,6 +6,7 @@ import (
 
 	"github.com/oklog/ulid/v2"
 	"github.com/rockavoldy/recipe-api/category"
+	"github.com/rockavoldy/recipe-api/recipematerial"
 	"gorm.io/gorm"
 )
 
@@ -14,7 +15,7 @@ var (
 	ErrAlreadyDeleted = errors.New("recipe have been deleted")
 )
 
-func List(ctx context.Context) ([]Recipe, error) {
+func List(ctx context.Context) ([]recipematerial.Recipe, error) {
 	tx := db.WithContext(ctx)
 	materials, err := listRecipes(tx)
 	if err != nil {
@@ -25,7 +26,7 @@ func List(ctx context.Context) ([]Recipe, error) {
 }
 
 func Create(ctx context.Context, data recipeJsonReq) (ulid.ULID, error) {
-	recipe, err := NewRecipe(data.Name)
+	recipe, err := recipematerial.NewRecipe(data.Name)
 	if err != nil {
 		return ulid.ULID{}, err
 	}
@@ -59,27 +60,38 @@ func Create(ctx context.Context, data recipeJsonReq) (ulid.ULID, error) {
 	return recipe.ID, nil
 }
 
-func Find(ctx context.Context, id ulid.ULID) (Recipe, error) {
+func Find(ctx context.Context, id ulid.ULID) (recipematerial.Recipe, error) {
 	tx := db.WithContext(ctx)
 	recipe, err := findRecipeById(tx, id)
 	if err != nil {
-		return Recipe{}, ErrNotFound
+		return recipematerial.Recipe{}, ErrNotFound
 	}
 
 	return recipe, nil
 }
 
-func Update(ctx context.Context, id ulid.ULID, name string) (Recipe, error) {
+func Update(ctx context.Context, id ulid.ULID, data recipeJsonReq) (recipematerial.Recipe, error) {
 	recipe, err := Find(ctx, id)
 	if err != nil {
-		return Recipe{}, err
+		return recipematerial.Recipe{}, err
 	}
 
+	recipe.CategoryID = data.CategoryID
+	recipe.Name = data.Name
+
 	tx := db.WithContext(ctx)
-	recipe.Name = name
-	if err := createOrUpdateRecipe(tx, recipe); err != nil {
-		return Recipe{}, err
-	}
+	err = tx.Transaction(func(txx *gorm.DB) error {
+		// Put it inside the transaction, make sure to rollback when it fails to append materials
+		if err := createOrUpdateRecipe(txx, recipe); err != nil {
+			return err
+		}
+
+		if err := appendMaterials(txx, recipe, data.Materials); err != nil {
+			return err
+		}
+
+		return nil
+	})
 
 	return recipe, nil
 }

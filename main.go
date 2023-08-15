@@ -10,6 +10,7 @@ import (
 	"github.com/rockavoldy/recipe-api/category"
 	"github.com/rockavoldy/recipe-api/material"
 	"github.com/rockavoldy/recipe-api/recipe"
+	"github.com/rockavoldy/recipe-api/recipematerial"
 	"github.com/rockavoldy/recipe-api/unit"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -21,6 +22,7 @@ func main() {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 
+	// dsn := "host=db.recipe-api.orb.local user=recipe password=recipe dbname=recipes_api port=5432 sslmode=disable"
 	dsn := "host=db user=recipe password=recipe dbname=recipes_api port=5432 sslmode=disable"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -31,6 +33,7 @@ func main() {
 	unit.SetDB(db)
 	material.SetDB(db)
 	recipe.SetDB(db)
+	recipematerial.SetDB(db)
 	r.Mount("/category", category.Router())
 	r.Mount("/unit", unit.Router())
 	r.Mount("/material", material.Router())

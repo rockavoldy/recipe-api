@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	"github.com/oklog/ulid/v2"
+	"github.com/rockavoldy/recipe-api/recipematerial"
 )
 
 var (
@@ -12,7 +13,7 @@ var (
 	ErrAlreadyDeleted = errors.New("material have been deleted")
 )
 
-func List(ctx context.Context) ([]Material, error) {
+func List(ctx context.Context) ([]recipematerial.Material, error) {
 	tx := db.WithContext(ctx)
 	materials, err := listMaterials(tx)
 	if err != nil {
@@ -23,7 +24,7 @@ func List(ctx context.Context) ([]Material, error) {
 }
 
 func Create(ctx context.Context, name string) (ulid.ULID, error) {
-	material, err := NewMaterial(name)
+	material, err := recipematerial.NewMaterial(name)
 	if err != nil {
 		return ulid.ULID{}, nil
 	}
@@ -36,26 +37,26 @@ func Create(ctx context.Context, name string) (ulid.ULID, error) {
 	return material.ID, nil
 }
 
-func Find(ctx context.Context, id ulid.ULID) (Material, error) {
+func Find(ctx context.Context, id ulid.ULID) (recipematerial.Material, error) {
 	tx := db.WithContext(ctx)
 	material, err := findMaterialById(tx, id)
 	if err != nil {
-		return Material{}, ErrNotFound
+		return recipematerial.Material{}, ErrNotFound
 	}
 
 	return material, nil
 }
 
-func Update(ctx context.Context, id ulid.ULID, name string) (Material, error) {
+func Update(ctx context.Context, id ulid.ULID, name string) (recipematerial.Material, error) {
 	material, err := Find(ctx, id)
 	if err != nil {
-		return Material{}, err
+		return recipematerial.Material{}, err
 	}
 
 	tx := db.WithContext(ctx)
 	material.Name = name
 	if err := createOrUpdateMaterial(tx, material); err != nil {
-		return Material{}, err
+		return recipematerial.Material{}, err
 	}
 
 	return material, nil

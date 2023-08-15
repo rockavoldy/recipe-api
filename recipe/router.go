@@ -2,7 +2,6 @@ package recipe
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -77,8 +76,7 @@ func createRecipeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	r.Body.Close()
-	log.Println("router")
-	log.Println(data)
+
 	id, err := Create(ctx, data)
 	if err != nil {
 		common.WriteError(w, http.StatusBadRequest, err)
@@ -98,7 +96,6 @@ func updateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ctx := r.Context()
 	recipeId := chi.URLParam(r, "recipeId")
 	id, err := ulid.Parse(recipeId)
 	if err != nil {
@@ -106,14 +103,16 @@ func updateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var data map[string]string
+	ctx := r.Context()
+	var data recipeJsonReq
 	err = json.NewDecoder(r.Body).Decode(&data)
-	r.Body.Close()
 	if err != nil {
 		common.WriteError(w, http.StatusBadRequest, err)
 		return
 	}
-	resp, err := Update(ctx, id, data["name"])
+	r.Body.Close()
+
+	resp, err := Update(ctx, id, data)
 	if err != nil {
 		if err == ErrNotFound {
 			common.WriteError(w, http.StatusNotFound, err)
@@ -121,11 +120,6 @@ func updateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		common.WriteError(w, http.StatusInternalServerError, err)
-		return
-	}
-
-	if err != nil {
-		common.WriteError(w, http.StatusBadRequest, err)
 		return
 	}
 

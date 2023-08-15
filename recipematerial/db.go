@@ -1,9 +1,8 @@
-package recipe
+package recipematerial
 
 import (
 	"errors"
 
-	"github.com/rockavoldy/recipe-api/recipematerial"
 	"gorm.io/gorm"
 )
 
@@ -18,7 +17,7 @@ func SetDB(gormDb *gorm.DB) error {
 	}
 
 	db = gormDb
+	db.AutoMigrate(&RecipeMaterial{})
 
-	db.AutoMigrate(&recipematerial.Recipe{})
 	return nil
 }
