@@ -8,6 +8,8 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/rockavoldy/recipe-api/category"
+	"github.com/rockavoldy/recipe-api/material"
+	"github.com/rockavoldy/recipe-api/recipe"
 	"github.com/rockavoldy/recipe-api/unit"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -27,8 +29,12 @@ func main() {
 
 	category.SetDB(db)
 	unit.SetDB(db)
+	material.SetDB(db)
+	recipe.SetDB(db)
 	r.Mount("/category", category.Router())
 	r.Mount("/unit", unit.Router())
+	r.Mount("/material", material.Router())
+	r.Mount("/recipe", recipe.Router())
 
 	log.Printf("Listening on port :%s\n", HTTP_PORT)
 	if err := http.ListenAndServe(fmt.Sprintf(":%s", HTTP_PORT), r); err != nil {
