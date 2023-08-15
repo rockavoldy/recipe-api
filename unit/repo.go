@@ -5,7 +5,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func listCategories(tx *gorm.DB) ([]Unit, error) {
+func listUnits(tx *gorm.DB) ([]Unit, error) {
 	var units []Unit
 	res := tx.Find(&units)
 
@@ -16,7 +16,7 @@ func listCategories(tx *gorm.DB) ([]Unit, error) {
 	return units, nil
 }
 
-func findCategoryById(tx *gorm.DB, id ulid.ULID) (Unit, error) {
+func findUnitById(tx *gorm.DB, id ulid.ULID) (Unit, error) {
 	var unit Unit
 	res := tx.First(&unit, "id = ?", id)
 
@@ -27,7 +27,7 @@ func findCategoryById(tx *gorm.DB, id ulid.ULID) (Unit, error) {
 	return unit, nil
 }
 
-func createOrUpdateCategory(tx *gorm.DB, unit Unit) error {
+func createOrUpdateUnit(tx *gorm.DB, unit Unit) error {
 	res := tx.Save(&unit)
 
 	if err := res.Error; err != nil {
@@ -37,7 +37,7 @@ func createOrUpdateCategory(tx *gorm.DB, unit Unit) error {
 	return nil
 }
 
-func deleteCategory(tx *gorm.DB, unit Unit) error {
+func deleteUnit(tx *gorm.DB, unit Unit) error {
 	res := tx.Delete(&unit, "id = ?", unit.ID)
 
 	if err := res.Error; err != nil {

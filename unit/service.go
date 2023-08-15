@@ -14,7 +14,7 @@ var (
 
 func List(ctx context.Context) ([]Unit, error) {
 	tx := db.WithContext(ctx)
-	units, err := listCategories(tx)
+	units, err := listUnits(tx)
 	if err != nil {
 		return nil, err
 	}
@@ -29,7 +29,7 @@ func Create(ctx context.Context, name string) (ulid.ULID, error) {
 	}
 
 	tx := db.WithContext(ctx)
-	if err := createOrUpdateCategory(tx, unit); err != nil {
+	if err := createOrUpdateUnit(tx, unit); err != nil {
 		return ulid.ULID{}, err
 	}
 
@@ -38,7 +38,7 @@ func Create(ctx context.Context, name string) (ulid.ULID, error) {
 
 func Find(ctx context.Context, id ulid.ULID) (Unit, error) {
 	tx := db.WithContext(ctx)
-	unit, err := findCategoryById(tx, id)
+	unit, err := findUnitById(tx, id)
 	if err != nil {
 		return Unit{}, ErrNotFound
 	}
@@ -54,7 +54,7 @@ func Update(ctx context.Context, id ulid.ULID, name string) (Unit, error) {
 
 	tx := db.WithContext(ctx)
 	unit.Name = name
-	if err := createOrUpdateCategory(tx, unit); err != nil {
+	if err := createOrUpdateUnit(tx, unit); err != nil {
 		return Unit{}, err
 	}
 
@@ -68,7 +68,7 @@ func Delete(ctx context.Context, id ulid.ULID) error {
 	}
 
 	tx := db.WithContext(ctx)
-	err = deleteCategory(tx, unit)
+	err = deleteUnit(tx, unit)
 	if err != nil {
 		return err
 	}
