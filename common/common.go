@@ -3,6 +3,9 @@ package common
 import (
 	"encoding/json"
 	"net/http"
+	"time"
+
+	"gopkg.in/guregu/null.v4"
 )
 
 type Response struct {
@@ -23,4 +26,18 @@ func WriteError(w http.ResponseWriter, status int, err error) {
 		Data:    nil,
 	}
 	WriteResponse(w, status, resp)
+}
+
+func ParseNullStringToTime(s null.String) (t null.Time) {
+	if !s.Valid {
+		return
+	}
+
+	ts, err := time.Parse(time.RFC3339, s.String)
+
+	if err != nil {
+		return
+	}
+
+	return null.TimeFrom(ts)
 }

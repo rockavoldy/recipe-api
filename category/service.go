@@ -67,10 +67,6 @@ func Delete(ctx context.Context, id ulid.ULID) error {
 		return err
 	}
 
-	if category.isDeleted() {
-		return ErrAlreadyDeleted
-	}
-
 	tx := db.WithContext(ctx)
 	err = deleteCategory(tx, category)
 	if err != nil {

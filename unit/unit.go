@@ -1,4 +1,4 @@
-package category
+package unit
 
 import (
 	"encoding/json"
@@ -9,28 +9,28 @@ import (
 	"gopkg.in/guregu/null.v4"
 )
 
-type Category struct {
+type Unit struct {
 	ID        ulid.ULID
 	Name      string
 	CreatedAt time.Time
 	UpdatedAt null.Time
 }
 
-func NewCategory(name string) (Category, error) {
+func NewUnit(name string) (Unit, error) {
 	if err := validateName(name); err != nil {
-		return Category{}, err
+		return Unit{}, err
 	}
 
-	category := Category{
+	unit := Unit{
 		ID:        ulid.Make(),
 		Name:      name,
 		CreatedAt: time.Now(),
 	}
 
-	return category, nil
+	return unit, nil
 }
 
-func (c Category) MarshalJSON() ([]byte, error) {
+func (u Unit) MarshalJSON() ([]byte, error) {
 	var j struct {
 		ID        ulid.ULID  `json:"id"`
 		Name      string     `json:"name"`
@@ -38,15 +38,15 @@ func (c Category) MarshalJSON() ([]byte, error) {
 		UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	}
 
-	j.ID = c.ID
-	j.Name = c.Name
-	j.CreatedAt = c.CreatedAt
-	j.UpdatedAt = c.UpdatedAt.Ptr()
+	j.ID = u.ID
+	j.Name = u.Name
+	j.CreatedAt = u.CreatedAt
+	j.UpdatedAt = u.UpdatedAt.Ptr()
 
 	return json.Marshal(j)
 }
 
-func (c *Category) UnmarshalJSON(data []byte) error {
+func (u *Unit) UnmarshalJSON(data []byte) error {
 	var j struct {
 		ID        ulid.ULID   `json:"id"`
 		Name      string      `json:"name"`
@@ -66,7 +66,7 @@ func (c *Category) UnmarshalJSON(data []byte) error {
 
 	updatedAt := common.ParseNullStringToTime(j.UpdatedAt)
 
-	c = &Category{
+	u = &Unit{
 		ID:        j.ID,
 		Name:      j.Name,
 		CreatedAt: createdAt,
