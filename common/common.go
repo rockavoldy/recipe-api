@@ -53,7 +53,7 @@ func ValidateName(name string) error {
 	if len(name) < 3 {
 		return ErrNameTooShort
 	}
-	if ok := strings.ContainsAny(name, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ,.-_()[]{};:'\""); !ok {
+	if ok := strings.ContainsAny(name, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ .-_()[]{};:'\""); !ok {
 		return ErrNameMustAlphanumeric
 	}
 

@@ -1,6 +1,8 @@
 package recipe
 
 import (
+	"fmt"
+
 	"github.com/oklog/ulid/v2"
 	"github.com/rockavoldy/recipe-api/recipematerial"
 	"gorm.io/gorm"
@@ -26,6 +28,27 @@ func findRecipeById(tx *gorm.DB, id ulid.ULID) (recipematerial.Recipe, error) {
 	}
 
 	return recipe, nil
+}
+
+func searchRecipesByQuery(tx *gorm.DB, query string, categoryID ulid.ULID, materials []string) ([]recipematerial.Recipe, error) {
+	var recipes []recipematerial.Recipe
+	res := tx.
+		Preload("Materials.Material").
+		Preload("Materials.Unit").
+		Preload(clause.Associations).
+		Joins("LEFT JOIN recipe_materials ON recipe_materials.recipe_id = recipes.id").
+		Joins("LEFT JOIN materials ON recipe_materials.material_id = materials.id").
+		Group("recipes.id").
+		Where("LOWER(recipes.name) LIKE ?", fmt.Sprintf("%%%s%%", query)).
+		Or("LOWER(materials.name) IN ?", materials).
+		Where("recipes.category_id = ?", categoryID).
+		Find(&recipes)
+
+	if err := res.Error; err != nil {
+		return nil, err
+	}
+
+	return recipes, nil
 }
 
 func createOrUpdateRecipe(tx *gorm.DB, recipe recipematerial.Recipe) error {

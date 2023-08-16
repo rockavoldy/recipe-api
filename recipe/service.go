@@ -17,12 +17,12 @@ var (
 
 func List(ctx context.Context) ([]recipematerial.Recipe, error) {
 	tx := db.WithContext(ctx)
-	materials, err := listRecipes(tx)
+	recipes, err := listRecipes(tx)
 	if err != nil {
 		return nil, err
 	}
 
-	return materials, nil
+	return recipes, nil
 }
 
 func Create(ctx context.Context, data recipeJsonReq) (ulid.ULID, error) {
@@ -68,6 +68,16 @@ func Find(ctx context.Context, id ulid.ULID) (recipematerial.Recipe, error) {
 	}
 
 	return recipe, nil
+}
+
+func Search(ctx context.Context, query string, categoryID ulid.ULID, materials []string) ([]recipematerial.Recipe, error) {
+	tx := db.WithContext(ctx)
+	recipes, err := searchRecipesByQuery(tx, query, categoryID, materials)
+	if err != nil {
+		return nil, err
+	}
+
+	return recipes, nil
 }
 
 func Update(ctx context.Context, id ulid.ULID, data recipeJsonReq) (recipematerial.Recipe, error) {

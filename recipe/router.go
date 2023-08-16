@@ -2,17 +2,24 @@ package recipe
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
+	"strings"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/oklog/ulid/v2"
 	"github.com/rockavoldy/recipe-api/common"
 )
 
+var (
+	ErrMissingQuery = errors.New("missing search query")
+)
+
 func Router() *chi.Mux {
 	r := chi.NewMux()
 
 	r.Get("/", listRecipeHandler)
+	r.Get("/search", searchRecipeHandler)
 	r.Get("/{recipeId}", getRecipeHandler)
 	r.Post("/", createRecipeHandler)
 	r.Put("/{recipeId}", updateRecipeHandler)
@@ -26,6 +33,41 @@ func listRecipeHandler(w http.ResponseWriter, r *http.Request) {
 	resp, err := List(ctx)
 	if err != nil {
 		common.WriteError(w, http.StatusInternalServerError, err)
+	}
+
+	status := http.StatusOK
+	common.WriteResponse(w, status, common.Response{
+		Message: http.StatusText(status),
+		Data:    resp,
+	})
+}
+
+func searchRecipeHandler(w http.ResponseWriter, r *http.Request) {
+	// `/search` endpoint can have some filter in the Query params
+	//  `q` will be used to search the recipe's name
+	// `material` will be used to filter by material's name, separated with comma
+	// `category` will take the ID of the category
+	query := r.URL.Query()
+	var recipeQuery string
+	if querySearch := query.Get("q"); querySearch != "" {
+		recipeQuery = strings.ToLower(querySearch)
+	}
+
+	var category ulid.ULID
+	if queryCategory := query.Get("category"); queryCategory != "" {
+		category, _ = ulid.Parse(queryCategory)
+	}
+
+	var materials []string
+	if queryMaterial := query.Get("material"); queryMaterial != "" {
+		materials = strings.Split(strings.ToLower(queryMaterial), ",")
+	}
+
+	ctx := r.Context()
+	resp, err := Search(ctx, recipeQuery, category, materials)
+	if err != nil {
+		common.WriteError(w, http.StatusInternalServerError, err)
+		return
 	}
 
 	status := http.StatusOK
