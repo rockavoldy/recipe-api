@@ -22,9 +22,9 @@ func main() {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 
-	// dsn := "host=db.recipe-api.orb.local user=recipe password=recipe dbname=recipes_api port=5432 sslmode=disable"
-	dsn := "host=db user=recipe password=recipe dbname=recipes_api port=5432 sslmode=disable"
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	dbconfig := dbConfig{}
+	dbconfig.loadFromEnv()
+	db, err := gorm.Open(postgres.Open(dbconfig.ConnStr()), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("Error when open connection to DB: %v\n", err)
 	}
@@ -39,6 +39,7 @@ func main() {
 	r.Mount("/material", material.Router())
 	r.Mount("/recipe", recipe.Router())
 
+	loadEnvStr("RECIPE_HTTP_PORT", &HTTP_PORT)
 	log.Printf("Listening on port :%s\n", HTTP_PORT)
 	if err := http.ListenAndServe(fmt.Sprintf(":%s", HTTP_PORT), r); err != nil {
 		log.Fatalf("HTTP server error: %v\n", err)

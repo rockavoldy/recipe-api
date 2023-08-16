@@ -1,0 +1,694 @@
+{
+  "info": {
+    "name": "Recipes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "recipe",
+      "item": [
+        {
+          "name": "List all recipe",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "localhost:8000/recipe",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/recipe"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [],
+            "body": null,
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        },
+        {
+          "name": "Get recipe",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "localhost:8000/recipe/01H7XHEQBWF7BF4DGMBKFYM9DB",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/recipe/01H7XHEQBWF7BF4DGMBKFYM9DB"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [],
+            "body": null,
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        },
+        {
+          "name": "Search recipe",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "localhost:8000/recipe/search",
+              "query": [
+                {
+                  "key": "q",
+                  "value": "timbel",
+                  "disabled": true,
+                  "description": null
+                },
+                {
+                  "key": "material",
+                  "value": "garam",
+                  "disabled": true,
+                  "description": null
+                }
+              ],
+              "protocol": null,
+              "host": [
+                "localhost:8000/recipe/search"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [],
+            "body": null,
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        },
+        {
+          "name": "Update recipe",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "localhost:8000/recipe/01H7Y8TZ3HTDPWXM1965B8PFQ0",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/recipe/01H7Y8TZ3HTDPWXM1965B8PFQ0"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "disabled": false,
+              "raw": "{\n  \"name\": \"Nasi goreng\",\n  \"category_id\": \"01H7XH8M4AFJKYAHTTRGPWKSGZ\",\n  \"materials\": [\n    {\n      \"material_id\": \"01H7XH8NE0QT94N8WW5DHAV5N6\",\n      \"quantity\": 1,\n      \"unit_id\": \"01H7XH8JGK2RFZPXCZ74MDHVVE\"\n    },\n    {\n      \"material_id\": \"01H7XNQ82GESR6EGD7NKZ2RW3K\",\n      \"quantity\": 2,\n      \"unit_id\": \"01H7XNN2VARMPFKJRSHJCKJCAF\"\n    }\n  ]\n}"
+            },
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        },
+        {
+          "name": "Delete recipe",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "localhost:8000/recipe/01H7XHEQBWF7BF4DGMBKFYM9DB",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/recipe/01H7XHEQBWF7BF4DGMBKFYM9DB"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "description": null
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "disabled": false,
+              "raw": "{\"name\":\"testPut\"}"
+            },
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        },
+        {
+          "name": "Create recipe",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "localhost:8000/recipe",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/recipe"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "description": null
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "disabled": false,
+              "raw": "{\"name\":\"Nasi timbel\",\"category_id\":\"01H7XH8M4AFJKYAHTTRGPWKSGZ\",\"materials\":[{\"material_id\":\"01H7XH8NE0QT94N8WW5DHAV5N6\",\"quantity\":2,\"unit_id\":\"01H7XH8JGK2RFZPXCZ74MDHVVE\"}]}"
+            },
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        }
+      ],
+      "protocolProfileBehavior": null,
+      "response": []
+    },
+    {
+      "name": "material",
+      "item": [
+        {
+          "name": "List all material",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "localhost:8000/material",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/material"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [],
+            "body": null,
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        },
+        {
+          "name": "Get material",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "localhost:8000/material/01H7W1CHKTKFZSCRJG67QXCRF0",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/material/01H7W1CHKTKFZSCRJG67QXCRF0"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [],
+            "body": null,
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        },
+        {
+          "name": "Update material",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "localhost:8000/material/01H7W1CHKTKFZSCRJG67QXCRF0",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/material/01H7W1CHKTKFZSCRJG67QXCRF0"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "description": null
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "disabled": false,
+              "raw": "{\"name\":\"testPut\"}"
+            },
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        },
+        {
+          "name": "Delete material",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "localhost:8000/material/01H7W1CHKTKFZSCRJG67QXCRF0",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/material/01H7W1CHKTKFZSCRJG67QXCRF0"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "description": null
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "disabled": false,
+              "raw": "{\"name\":\"testPut\"}"
+            },
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        },
+        {
+          "name": "Create material",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "localhost:8000/material",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/material"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "description": null
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "disabled": false,
+              "raw": "{\"name\":\"Garam\"}"
+            },
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        }
+      ],
+      "protocolProfileBehavior": null,
+      "response": []
+    },
+    {
+      "name": "category",
+      "item": [
+        {
+          "name": "List all category",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "localhost:8000/category",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/category"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [],
+            "body": null,
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        },
+        {
+          "name": "Update category",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "localhost:8000/category/01H7VYC4DRQVF3BZMCA06XAKHM",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/category/01H7VYC4DRQVF3BZMCA06XAKHM"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "description": null
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "disabled": false,
+              "raw": "{\"name\":\"testPut\"}"
+            },
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        },
+        {
+          "name": "Delete category",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "localhost:8000/category/01H7VYC4DRQVF3BZMCA06XAKHM",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/category/01H7VYC4DRQVF3BZMCA06XAKHM"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "description": null
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "disabled": false,
+              "raw": "{\"name\":\"testPut\"}"
+            },
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        },
+        {
+          "name": "Create category",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "localhost:8000/category",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/category"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "description": null
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "disabled": false,
+              "raw": "{\"name\":\"Main course\"}"
+            },
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        }
+      ],
+      "protocolProfileBehavior": null,
+      "response": []
+    },
+    {
+      "name": "unit",
+      "item": [
+        {
+          "name": "List all unit",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "localhost:8000/unit",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/unit"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [],
+            "body": null,
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        },
+        {
+          "name": "Get unit",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "localhost:8000/unit/01H7W0VF1BNPD1MS0T0025MJK5",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/unit/01H7W0VF1BNPD1MS0T0025MJK5"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [],
+            "body": null,
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        },
+        {
+          "name": "Update unit",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "localhost:8000/unit/01H7W0VF1BNPD1MS0T0025MJK5",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/unit/01H7W0VF1BNPD1MS0T0025MJK5"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "description": null
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "disabled": false,
+              "raw": "{\"name\":\"testPut\"}"
+            },
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        },
+        {
+          "name": "Delete unit",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "localhost:8000/unit/01H7W0VF1BNPD1MS0T0025MJK5",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/unit/01H7W0VF1BNPD1MS0T0025MJK5"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "description": null
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "disabled": false,
+              "raw": "{\"name\":\"testPut\"}"
+            },
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        },
+        {
+          "name": "Create Unit",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "localhost:8000/unit",
+              "query": null,
+              "protocol": null,
+              "host": [
+                "localhost:8000/unit"
+              ],
+              "port": null,
+              "path": null
+            },
+            "description": "",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "description": null
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "disabled": false,
+              "raw": "{\"name\":\"Tablespoon\"}"
+            },
+            "auth": null
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false,
+            "followOriginalHttpMethod": false,
+            "followAuthorizationHeader": false
+          },
+          "response": []
+        }
+      ],
+      "protocolProfileBehavior": null,
+      "response": []
+    }
+  ]
+}

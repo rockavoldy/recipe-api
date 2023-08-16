@@ -4,6 +4,8 @@ services:
   app:
     container_name: recipes_app
     build: .
+    env_file:
+      - .env.docker
     ports:
       - 8000:8000
     depends_on:
